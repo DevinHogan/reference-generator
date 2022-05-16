@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	
+	<link rel="stylesheet" href="style.css">
+	
+		<title>Book Reference Generator </title> 
+		
+	</head>
+	
+	<body>
+	
+	
+		<button style="font-size: 400%; width:15%;" onclick="window.location.href = 'index.html';" >⌂</button>  <div class="header">  <h3><var id="demo"></var> Book Page</h3> </div>
+  
+  <div class="column" style="background-color:#7289da; color: #f1f1f1; font-size: 2em;" >
+
+	
+	<p id="demo"></p>
+  
+   
+    <div class="control-group">
+      <label> Surname: </label> <input type="text" id="lastName" name="Last Name" class="reqClass" required autocomplete="off" style="height:50px; width:200px; font-size:20px; margin: 5%  5% 5% 5%;" placeholder="Surname">
+	  <label> First Name: </label>	<input  type="text" id="firstName" name="firstName" class="reqClass" autocomplete="off" style="height:50px; width:200px; font-size:20px;  margin: 5%  5% 5% 5%;" placeholder="First Name" required> 
+	  <label> Edition: </label> <input class="reqClass" id="editionNo" type="text" name="edition" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="Edition" required>
+	  <br><label> Page Number(s): </label> <input type="text" id="pageNo" name="Page numbers" autocomplete="off" style="height:50px; width:200px; font-size:30px;  margin-left: 5%;" placeholder="Page Numbers">
+      <label> Book Name: </label> <input type="text" id="bookTitle" name="bookName" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="Title of book">
+	  <label> Place of Publication: </label> <input type="text" name="placeOfPub" id="pubPlace" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="DOI/URL" required>
+	<br><label> Year Published: </label> <input type="text" id="publishedYear" name="publishedYear" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="Year Published" required>
+	  <label> Date Accessed: </label> <input type="date" id="date" autocomplete="off" style="height:50px; width:200px; font-size:20px; margin: 5%  5% 5% 5%;" name="dateAccessed">
+	
+ <button type="submit" style="font-size:300%; margin-left: 5%;" onclick="formatAction()">GO!</button>
+	 </div>
+   <!-- <a id="addNewName">Add another</a> -->
+ 
+ 
+
+</div>
+  
+  
+  
+
+<div class="footer">
+</div>
+
+ 
+	</body>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"> </script>
+	
+	
+	 <script>
+	 
+let refLang = sessionStorage.getItem("answer");
+document.getElementById("demo").innerHTML = refLang; 
+
+
+    <!-- var counter = 0 -->
+    
+      <!-- $("#addNewName").click(function(){ -->
+        <!-- counter ++; -->
+        <!-- if (counter < 4) { -->
+          <!-- var elem = $("<input/>",{ -->
+            <!-- type: "text", -->
+            <!-- name: `name[counter]` -->
+        <!-- }); -->
+		
+        <!-- } -->
+		
+		<!-- else { -->
+          <!-- alert("You can only add 4 Names") -->
+        <!-- } -->
+        
+        <!-- var removeLink = $("<span/>").html("X").click(function(){ -->
+            <!-- $(elem).remove(); -->
+            <!-- $(this).remove(); -->
+            <!-- counter --; -->
+        <!-- }); -->
+        
+        <!-- $("#name-inputs").append(elem).append(removeLink); -->
+    <!-- }); -->
+    
+	
+	function formatAction()
+	{
+	
+		var classVar = document.getElementsByClassName('reqClass');
+		
+		  for(var i=0; i < classVar.length;)
+		  {
+				var classValues = document.getElementsByClassName('reqClass')[i].value;
+				var classNames = document.getElementsByClassName('reqClass')[i].name;
+				i++;
+			  if (!classValues) {
+			  
+				alert("please enter a value for " + classNames);
+				break;
+		  } 
+		  else
+		  {
+	
+			var initialVal = firstName.value;
+			var initialValue = initialVal.charAt(0);
+
+				if (refLang=="Harvard")
+				{
+				
+				
+				var dateEdit = dayjs(date.value).format('D MMMM YYYY');
+
+				var fullBib = lastName.value+", "+initialValue+". ("+publishedYear.value+") <i>"+bookTitle.value+"</i>. "+editionNo.value+". "+pubPlace.value+".";
+				var textCitation = "("+publishedYear.value+" p."+pageNo.value+")";
+				sessionStorage.setItem("bibliographyRef", fullBib);
+				sessionStorage.setItem("textRef", textCitation);
+				window.location.href = "Results.html";
+				
+				}
+				
+				
+				else if (refLang=="Vancouver")
+				{
+				
+				var dateEdit = dayjs(publishedYear.value).format('YYYY MMM');
+				var dateEdit2 = dayjs(date.value).format('YYYY MMM D');
+				
+					var fullBib = lastName.value+" "+initialValue+'. '+bookTitle.value+". "+editionNo.value+"th ed. "+pubPlace.value+"; "+dateEdit+". "+pageNo.value+" p.";
+					var textCitation = "("+lastName.value+", pp"+pageNo.value+")";
+					sessionStorage.setItem("bibliographyRef", fullBib);
+					sessionStorage.setItem("textRef", textCitation);
+					window.location.href = "Results.html";
+					
+				}
+				
+				else if (refLang=="APA")
+				{
+				
+				
+					var fullBib = lastName.value+', '+initialValue+'. '+"("+publishedYear.value+")." +  "<i>"+bookTitle.value+'</i>('+editionNo.value+'th ed.).'+pubPlace.value+'.';
+					var textCitation = '('+publishedYear.value+', p.'+pageNo.value+')';
+					sessionStorage.setItem("bibliographyRef", fullBib);
+					sessionStorage.setItem("textRef", textCitation);
+					window.location.href = "Results.html";
+					
+				}
+			  
+				else if (refLang=="MLA")
+				{
+				
+					var fullBib = lastName.value+', '+firstName.value+'. '+'<i>'+bookTitle.value+'</i>. '+editionNo.value+', '+publishedYear.value+', pp.'+pubPlace.value+', '+pageNo.value+'.';
+					var textCitation = '('+lastName.value+" "+pageNo.value+')';
+					sessionStorage.setItem("bibliographyRef", fullBib);
+					sessionStorage.setItem("textRef", textCitation);
+					window.location.href = "Results.html";
+					
+				}
+				else
+				{
+					alert("Go to the Home page and pick a language")
+				}
+			}
+		}
+	}
+</script>
+
+
+	
+	
+	
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	
+	<link rel="stylesheet" href="style.css">
+	
+		<title>Journal Reference Generator </title> 
+		
+	</head>
+	
+	<body>
+	
+	
+		<button style="font-size: 400%; width:15%;" onclick="window.location.href = 'index.html';" >⌂</button>  <div class="header">  <h3><var id="demo"></var> Journal Page</h3> </div>
+  
+  <div class="column" style="background-color:#7289da; color: #f1f1f1; font-size: 2em;" >
+
+	
+	
+  
+   
+    <div class="control-group">
+      <label> Surname: </label> <input type="text" id="lastName" name="Last Name" class="reqClass" required autocomplete="off" style="height:50px; width:200px; font-size:20px; margin: 5%  5% 5% 5%;" placeholder="Surname/Company Name">
+	  <label> First Name: </label>	<input  type="text" id="firstName" name="firstName" class="reqClass" autocomplete="off" style="height:50px; width:200px; font-size:20px;  margin: 5%  5% 5% 5%;" placeholder="First Name" required> 
+	  <label> Article Title: </label> <input class="reqClass" id="articleTitle" type="text" name="Article" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="Article Title" required>
+	  <br><label> Page Number(s): </label> <input type="text" id="pageNo" name="Page numbers" autocomplete="off" style="height:50px; width:200px; font-size:30px;  margin-left: 5%;" placeholder="Page Numbers">
+      <label> Journal Name: </label> <input type="text" id="journalTitle" name="JournalName" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="Title of Journal">
+	  <label> URL/DOI: </label> <input type="text" name="urlDoi" id="urlDoiValue" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="DOI/URL" required>
+	  <br><label> Year Published: </label> <input type="number" step="500" id="publishedYear" name="publishedYear" autocomplete="off" style="height:50px; width:200px; font-size:15px; margin: 5%  5% 5% 5%;" placeholder="Year Published" required>
+	  <label> Date Accessed: </label> <input type="date" id="date" autocomplete="off" style="height:50px; width:200px; font-size:20px; margin: 5%  5% 5% 5%;" name="dateAccessed">
+	  <label> Multiple Authors?:</label>
+  <input type="radio" style="background-color: #36393e;" autocomplete="off" id="authorOption" name="authorOptions" value="Yes"> <label for="authorOption" style="font-size: 40px; width: 100px;">Yes</label> 
+  <input type="radio" style="background-color: #36393e;" autocomplete="off" id="authorOption2" name="authorOptions" value="No"> <label for="authorOption2" style="font-size: 40px; width: 100px;">No</label>
+  
+ 
+ <button type="submit" style="font-size:300%; margin-left: 5%;" onclick="formatAction()">GO!</button>
+	 </div>
+   <!-- <a id="addNewName">Add another</a> -->
+ 
+ 
+
+</div>
+  
+  
+  
+
+<div class="footer">
+</div>
+
+ 
+	</body>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"> </script>
+	
+	
+	 <script>
+	 
+let refLang = sessionStorage.getItem("answer");
+document.getElementById("demo").innerHTML = refLang; 
+
+	function formatAction()
+	{
+	
+		var classVar = document.getElementsByClassName('reqClass');
+		
+		  for(var i=0; i < classVar.length;)
+		  {
+				var classValues = document.getElementsByClassName('reqClass')[i].value;
+				var classNames = document.getElementsByClassName('reqClass')[i].name;
+				i++;
+			  if (!classValues) {
+			  
+				alert("please enter a value for " + classNames);
+				break;
+		  } 
+		  else
+		  {
+			var authorOptionRes = document.querySelector('input[type="radio"][name="authorOptions"]:checked').value;
+			
+				if (authorOptionRes=="Yes")
+				{
+					var multipleAuth = "<i>" + "et al" + "</i>" + ". ";
+				}
+				else if (authorOptionRes=="No")
+				{
+					var multipleAuth = "";
+				}
+				else
+				{
+					alert("Enter if there are multiple authors");
+					break;
+				}
+		  
+			var initialVal = firstName.value;
+			var initialValue = initialVal.charAt(0);
+
+				if (refLang=="Harvard")
+				{
+				
+				
+				var dateEdit = dayjs(date.value).format('D MMMM YYYY');
+
+				var fullBib = lastName.value+", "+initialValue+". "+multipleAuth+"("+publishedYear.value+") '"+articleTitle.value+"'.  <i>"+journalTitle.value+"</i>, pp." +pageNo.value+". Available at: " +urlDoiValue.value+" (Accessed: "+ dateEdit +")";
+				var textCitation = "("+lastName.value+" "+multipleAuth+", "+publishedYear.value+")";
+				sessionStorage.setItem("bibliographyRef", fullBib);
+				sessionStorage.setItem("textRef", textCitation);
+				window.location.href = "Results.html";
+				
+				}
+				
+				
+				else if (refLang=="Vancouver")
+				{
+				
+				var dateEdit = dayjs(publishedYear.value).format('YYYY MMM');
+				var dateEdit2 = dayjs(date.value).format('YYYY MMM D');
+				
+					var fullBib = lastName.value+" "+initialValue+'. '+multipleAuth+articleTitle.value+". "+journalTitle.value+". "+dateEdit+"[cited "+dateEdit2+"]; "+pageNo.value+". "+"Available from: " +urlDoiValue.value;
+					var textCitation = "("+lastName.value+" "+multipleAuth+", pp"+pageNo.value+")";
+					sessionStorage.setItem("bibliographyRef", fullBib);
+					sessionStorage.setItem("textRef", textCitation);
+					window.location.href = "Results.html";
+					
+				}
+				
+				else if (refLang=="APA")
+				{
+				
+				
+					var fullBib = lastName.value+', '+initialValue+'. '+multipleAuth+"("+publishedYear.value+"). " +articleTitle.value+". <i>"+journalTitle.value+'</i>, ' +pageNo.value+'. '+urlDoiValue.value;
+					var textCitation = '('+lastName.value+" "+multipleAuth+publishedYear.value+')';
+					sessionStorage.setItem("bibliographyRef", fullBib);
+					sessionStorage.setItem("textRef", textCitation);
+					window.location.href = "Results.html";
+					
+				}
+			  
+				else if (refLang=="MLA")
+				{
+				
+					var fullBib = lastName.value+', '+firstName.value+'. '+multipleAuth+'"'+articleTitle.value+'". '+'<i>'+journalTitle.value+'</i>, ' +publishedYear.value+', pp.' +pageNo.value+'. '+urlDoiValue.value+'.';
+					var textCitation = '('+lastName.value+" "+multipleAuth+pageNo.value+')';
+					sessionStorage.setItem("bibliographyRef", fullBib);
+					sessionStorage.setItem("textRef", textCitation);
+					window.location.href = "Results.html";
+					
+				}
+				else
+				{
+					alert("Go to the Home page and pick a language")
+				}
+			}
+		}
+	}
+</script>
+
+
+	
+	
+	
+</html>

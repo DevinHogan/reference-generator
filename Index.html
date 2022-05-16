@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	
+	<link rel="stylesheet" href="style.css">
+		<title>Reference Generator Homepage</title>
+		
+		
+	</head>
+	
+	<body>
+		<div class="header">
+  <h2>Please Select a Source Type and Style</h2>
+</div>
+
+<div class="row">
+  <div class="column" style="background-color:#7289da; font-size: 40px;">
+  
+<input type="radio" autocomplete="off" id="harvard" name="RefStyle" value="Harvard">
+<label for="harvard">Harvard</label><br>
+<input type="radio" autocomplete="off" id="vancouver" name="RefStyle" value="Vancouver">
+<label for="vancouver">Vancouver</label><br>
+<input type="radio" autocomplete="off" id="APA" name="RefStyle" value="APA"  >
+<label for="APA">APA</label> <br>
+<input type="radio" autocomplete="off" id="MLA" name="RefStyle" value="MLA"  >
+<label for="MLA">MLA</label> 
+  
+  
+  </div>
+  
+  <div class="column" style="background-color:#7289da; font-size: 200%;">
+
+<input type="radio" autocomplete="off" id="journal" name="RefStyle2" value="Journal">
+<label for="journal">Journal</label><br>
+<input type="radio" autocomplete="off" id="book" name="RefStyle2" value="Book">
+<label for="book">Book</label><br>
+<input type="radio" autocomplete="off" id="website" name="RefStyle2" value="Website">
+<label for="website">Website</label> <br>
+<input type="radio" autocomplete="off" id="media" name="RefStyle2" value="Media">
+<label for="media">Media</label> <br>
+<input type="radio" autocomplete="off" id="conference" name="RefStyle2" value="Conference">
+<label for="conference">Conference Proceedings</label>   
+  
+  
+  </div>
+  
+</div>
+<div class="column" style="text-align: center; background-color: #36393e; width: 100%;">
+ <button type="submit" style="font-size:50px;" onclick="displayRadioValue()">GO!</button>
+</div>
+<div class="footer"></div>
+
+ 
+	</body>
+	 <script>
+
+function displayRadioValue() {
+
+ var answer = document.querySelector('input[type="radio"][name="RefStyle"]:checked').value;
+ var answer2 = document.querySelector('input[type="radio"][name="RefStyle2"]:checked').value;
+ 
+ 
+		//Journal Section
+		if (answer == "Harvard" && answer2 =="Journal"){alert("Harvard and Journal"); window.location.href = "Journal.html"; sessionStorage.setItem("answer", answer);}
+		else if(answer == "Vancouver" && answer2 == "Journal"){alert("Vancouver and Journal"); window.location.href = "Journal.html"; sessionStorage.setItem("answer", answer);}
+		else if (answer == "APA" && answer2 =="Journal"){alert("APA and Journal"); window.location.href = "Journal.html"; sessionStorage.setItem("answer", answer);}
+		else if (answer == "MLA" && answer2 =="Journal"){alert("MLA and Journal"); window.location.href = "Journal.html"; sessionStorage.setItem("answer", answer);}
+		
+		//Book Section
+		else if (answer == "Harvard" && answer2 =="Book"){alert("Harvard and Book"); window.location.href = "Book.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "Vancouver" && answer2 =="Book"){alert("Vancouver and Book"); window.location.href = "Book.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "APA" && answer2 =="Book"){alert("APA and Book"); window.location.href = "Book.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "MLA" && answer2 =="Book"){alert("MLA and Book"); window.location.href = "Book.html";sessionStorage.setItem("answer", answer);}
+		
+		//Website Section
+		else if (answer == "Harvard" && answer2 =="Website"){alert("Harvard and Website");window.location.href = "Site.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "Vancouver" && answer2 =="Website"){alert("Vancouver and Website");window.location.href = "Site.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "APA" && answer2 =="Website"){alert("APA and Website");window.location.href = "Site.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "MLA" && answer2 =="Website"){alert("MLA and Website");window.location.href = "Site.html";sessionStorage.setItem("answer", answer);}
+		
+		//Media Section
+		else if (answer == "Harvard" && answer2 =="Media"){alert("Harvard and Media"); window.location.href = "Media.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "Vancouver" && answer2 =="Media"){alert("Vancouver and Media"); window.location.href = "Media.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "APA" && answer2 =="Media"){alert("APA and Media"); window.location.href = "Media.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "MLA" && answer2 =="Media"){alert("MLA and Media"); window.location.href = "Media.html";sessionStorage.setItem("answer", answer);}
+		
+		//Conference Section
+		else if (answer == "Harvard" && answer2 =="Conference"){alert("Harvard and Conference"); window.location.href = "Conference.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "Vancouver" && answer2 =="Conference"){alert("Not Available as Citation was missing from CiteThemRight");}
+		else if (answer == "APA" && answer2 =="Conference"){alert("APA and Conference"); window.location.href = "Conference.html";sessionStorage.setItem("answer", answer);}
+		else if (answer == "MLA" && answer2 =="Conference"){alert("MLA and Conference"); window.location.href = "Conference.html";sessionStorage.setItem("answer", answer);}
+		
+		
+		else
+		{
+		alert("Please Enter a Source and Style");
+		
+		}
+	}
+	
+		
+    </script>
+	
+</html>
